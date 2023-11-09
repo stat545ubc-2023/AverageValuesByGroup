@@ -20,7 +20,20 @@ This function returns a dataframe with each \emph{group} in the first column, an
 This function takes a dataset and groups it by a chosen variable, then finds the mean value of a chosen measure for each group.
 }
 \examples{
-average_values_by_group(vancouver_trees, genus_name, diameter)
-average_values_by_group(vancouver_trees, species_name, latitude)
-average_values_by_group(penguins, island, bill_length_mm)
+
+library(tibble)
+
+sample_data_1 <- tibble(
+  Name = c("Alice", "Bob", "Charlie", "David", "Eve"),
+  Age = c(25, 32, 28, 22, 30),
+  City = c("New York", "New York", "New York", "Houston", "Houston"),
+  Hobby = c("Gaming", "Cooking", "Gaming", "Gaming", "Cooking"))
+
+sample_data_2 <- tibble(
+  Gender = c("Female", "Male", "Male", "Male", "Female"),
+  Grade = c(94, 78, 82, NA, 88))
+
+average_values_by_group(sample_data_1, City, Age)
+average_values_by_group(sample_data_1, Hobby, Age)
+average_values_by_group(sample_data_2, Gender, Grade)
 }
