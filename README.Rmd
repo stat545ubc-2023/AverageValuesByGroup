@@ -1,0 +1,80 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# AverageValuesByGroup
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of AverageValuesByGroup is to take a dataset and group it by a chosen variable, then find the mean value of a chosen measure for each group.
+
+## Installation
+
+You can install the development version of AverageValuesByGroup from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("stat545ubc-2023/assignment-b2-jchalissery14")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+library(AverageValuesByGroup)
+library(tibble)
+
+sample_data <- tibble(
+  Gender = c("Female", "Female", "Male", "Male", "Female"),
+  Grade = c(74, 98, 62, 84, 88))
+
+average_values_by_group(sample_data, Gender, Grade)
+```
+Notice that average_values_by_group returns a dataframe with each *group* in the first column, and the *mean value of the measure for each group* in the second column.
+
+The *measure* parameter must have numeric values, otherwise it will return a programmed error. This function still works if there are NA values in the chosen measure parameter. 
+
+```{r tests}
+library(devtools)
+library(testthat)
+
+test_that("average_values_by_group works when the measure has NA values", {
+  sample_data2 <- data.frame(Group = c("A", "A", "B", "B", "B"), Value = c(10, 20, NA, 40, 50))
+  result <- average_values_by_group(sample_data2, Group, Value)
+  expect_lt(result$average[1], result$average[2])
+})
+
+test_that("average_values_by_group gives the programmed error message when the measure parameter is not numeric", {
+  sample_data3 <- data.frame(Group = c("A", "A", "B", "B", "B"), Value = c("one", "two", "three", "four", "five"))
+  expect_error(average_values_by_group(sample_data3, Group, Value), "The 'measure' parameter must have numeric values.")
+})
+```
+
+What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+
+```{r cars}
+summary(cars)
+```
+
+You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
+
+You can also embed plots, for example:
+
+```{r pressure, echo = FALSE}
+plot(pressure)
+```
+
+In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.

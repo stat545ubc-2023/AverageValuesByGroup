@@ -6,13 +6,30 @@
 #' @param group is the parameter for the variable you choose to **group** the dataset by. This variable should be a column name from the dataset.
 #' @param measure is the parameter for the **measure** you choose to find the mean value of for each of the groups. The column you choose for the measure parameter must have numeric values.
 #'
+#'@importFrom dplyr pull
+#'@importFrom dplyr group_by
+#'@importFrom dplyr summarize
+#'
 #' @return This function returns a dataframe with each *group* in the first column, and the *mean value of the measure for each group* in the second column.
 #' @export
 #'
 #' @examples
-#' average_values_by_group(vancouver_trees, genus_name, diameter)
-#' average_values_by_group(vancouver_trees, species_name, latitude)
-#' average_values_by_group(penguins, island, bill_length_mm)
+#'
+#'library(tibble)
+#'
+#' sample_data_1 <- tibble(
+#'   Name = c("Alice", "Bob", "Charlie", "David", "Eve"),
+#'   Age = c(25, 32, 28, 22, 30),
+#'   City = c("New York", "New York", "New York", "Houston", "Houston"),
+#'   Hobby = c("Gaming", "Cooking", "Gaming", "Gaming", "Cooking"))
+#'
+#' sample_data_2 <- tibble(
+#'   Gender = c("Female", "Male", "Male", "Male", "Female"),
+#'   Grade = c(94, 78, 82, NA, 88))
+#'
+#' average_values_by_group(sample_data_1, City, Age)
+#' average_values_by_group(sample_data_1, Hobby, Age)
+#' average_values_by_group(sample_data_2, Gender, Grade)
 
 
 average_values_by_group <- function(dataset, group, measure) {
